@@ -18,7 +18,7 @@ export class ApkSignerTools {
   readonly listTools = ListToolsRequestSchema;
   readonly callTool = CallToolRequestSchema;
 
-  async handleListTools(): Promise<z.infer<typeof ListToolsResultSchema>> {
+    handleListTools = async (): Promise<z.infer<typeof ListToolsResultSchema>> => {
     return {
       tools: [
         {
@@ -64,6 +64,7 @@ export class ApkSignerTools {
           description: 'Verify the signature of an APK file',
           inputSchema: {
             type: 'object',
+            description: 'Verify the signature of an APK file',
             properties: {
               apkPath: {
                 type: 'string',
@@ -128,7 +129,7 @@ export class ApkSignerTools {
     };
   }
 
-  async handleCallTool(request: z.infer<typeof CallToolRequestSchema>): Promise<z.infer<typeof CallToolResultSchema>> {
+  handleCallTool = async (request: z.infer<typeof CallToolRequestSchema>): Promise<z.infer<typeof CallToolResultSchema>> => {
     const { params } = request;
     const { name, arguments: args } = params;
 
