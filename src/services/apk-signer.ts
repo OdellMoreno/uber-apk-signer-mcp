@@ -65,7 +65,7 @@ export class ApkSigner {
 
     // Build the command for Uber APK Signer
     const command = [
-      this.uberApkSignerPath.endsWith('.jar') ? `java -jar "${this.uberApkSignerPath}"` : this.uberApkSignerPath,
+      `java -jar "${this.uberApkSignerPath}"`,
       
       'sign',
       '--apk', apkPath,
@@ -223,7 +223,7 @@ export class ApkSigner {
   // Method to check if Uber APK Signer is available
   async checkAvailability(): Promise<boolean> {
     try {
-      const { stdout } = await execAsync(`${this.uberApkSignerPath.endsWith('.jar') ? `java -jar "${this.uberApkSignerPath}"` : this.uberApkSignerPath} --version`);
+      const { stdout } = await execAsync(`${`java -jar "${this.uberApkSignerPath}"`} --version`);
       console.log(`Uber APK Signer version: ${stdout.trim()}`);
       return true;
     } catch {
