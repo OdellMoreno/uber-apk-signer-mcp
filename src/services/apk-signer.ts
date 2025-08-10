@@ -102,7 +102,7 @@ export class ApkSigner {
     await this.validateFileExists(apkPath, 'APK file');
 
     const command = [
-      this.uberApkSignerPath,
+      `java -jar "${this.uberApkSignerPath}"`,
       'verify',
       '--apk', apkPath,
     ].join(' ');
@@ -178,7 +178,7 @@ export class ApkSigner {
 
     // Build the command for creating a keystore
     const command = [
-      this.uberApkSignerPath,
+      `java -jar "${this.uberApkSignerPath}"`,
       'create-keystore',
       '--keystore', keystorePath,
       '--keystore-pass', keystorePassword,
