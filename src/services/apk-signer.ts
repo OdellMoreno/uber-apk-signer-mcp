@@ -68,12 +68,12 @@ export class ApkSigner {
       `java -jar "${this.uberApkSignerPath}"`,
       
       'sign',
-      '--apk', apkPath,
-      '--keystore', keystorePath,
-      '--keystore-pass', keystorePassword,
-      '--key-alias', keyAlias,
-      '--key-pass', keyPassword,
-      '--output', finalOutputPath,
+      '-a', apkPath,
+      '--ks', keystorePath,
+      '--ksPass', keystorePassword,
+      '--ksAlias', keyAlias,
+      '--ksKeyPass', keyPassword,
+      '-o', finalOutputPath,
     ].join(' ');
 
     try {
@@ -104,7 +104,7 @@ export class ApkSigner {
     const command = [
       `java -jar "${this.uberApkSignerPath}"`,
       'verify',
-      '--apk', apkPath,
+      '-a', apkPath,
     ].join(' ');
 
     try {
@@ -180,10 +180,10 @@ export class ApkSigner {
     const command = [
       `java -jar "${this.uberApkSignerPath}"`,
       'create-keystore',
-      '--keystore', keystorePath,
-      '--keystore-pass', keystorePassword,
-      '--key-alias', keyAlias,
-      '--key-pass', keyPassword,
+      '--ks', keystorePath,
+      '--ksPass', keystorePassword,
+      '--ksAlias', keyAlias,
+      '--ksKeyPass', keyPassword,
       '--common-name', commonName,
       '--organization', organization,
     ].join(' ');
