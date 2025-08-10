@@ -36,6 +36,8 @@ npm run build
 
 ## Configuration
 
+The server automatically loads configuration from a `.env` file in your project directory, or you can set environment variables directly.
+
 ### Environment Variables
 
 You can configure the server using environment variables:
@@ -56,6 +58,30 @@ export MCP_TCP_PORT=3000
 export MCP_ALLOW_INSECURE=false
 export MCP_MAX_FILE_SIZE=104857600
 ```
+
+### Using a .env File (Recommended)
+
+Create a `.env` file in your project directory for easier configuration:
+
+```bash
+# Required: Path to your uber-apk-signer tool
+UBER_APK_SIGNER_PATH=/path/to/uber-apk-signer
+
+# Optional: Uber APK Signer settings
+UBER_APK_SIGNER_TIMEOUT=300000        # 5 minutes timeout
+UBER_APK_SIGNER_LOG_LEVEL=info        # debug, info, warn, error
+
+# Optional: Server settings
+MCP_SERVER_NAME=uber-apk-signer-mcp    # Server name
+MCP_SERVER_VERSION=1.0.0               # Server version
+MCP_TRANSPORT=stdio                    # stdio or tcp
+
+# Optional: Security settings
+MCP_ALLOW_INSECURE=false               # Allow insecure connections
+MCP_MAX_FILE_SIZE=104857600            # Max file size (100MB)
+```
+
+**Note**: The `.env` file is automatically ignored by Git to keep your personal paths private.
 
 ### Uber APK Signer Path
 

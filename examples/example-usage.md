@@ -336,7 +336,14 @@ console.log('Result:', result);
 
 ### **Environment Setup**
 
-Make sure to set the `UBER_APK_SIGNER_PATH` environment variable:
+The server automatically loads configuration from a `.env` file in your project directory. Create one with your uber-apk-signer path:
+
+```bash
+# Create .env file
+echo "UBER_APK_SIGNER_PATH=/path/to/uber-apk-signer" > .env
+```
+
+Or set the environment variable directly:
 
 ```bash
 # Set the path to your Uber APK Signer tool
