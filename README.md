@@ -82,26 +82,39 @@ npm start -- --port 3000 --host localhost
 The MCP server provides the following tools:
 
 #### 1. Sign APK (`sign_apk`)
-Sign an APK file using a keystore.
+Sign an APK file using a keystore. **Only `apkPath` is required** - other parameters use smart defaults.
 
 **Parameters:**
 - `apkPath` (required): Path to the APK file to sign
-- `keystorePath` (required): Path to the keystore file
-- `keystorePassword` (required): Password for the keystore
-- `keyAlias` (required): Alias of the key to use for signing
-- `keyPassword` (required): Password for the key
-- `outputPath` (optional): Output path for the signed APK
+- `keystorePath` (optional): Path to the keystore file (defaults to `~/.android/debug.keystore`)
+- `keystorePassword` (optional): Password for the keystore (defaults to `android`)
+- `keyAlias` (optional): Alias of the key to use for signing (defaults to `androiddebugkey`)
+- `keyPassword` (optional): Password for the key (defaults to `android`)
+- `outputPath` (optional): Output path for the signed APK (auto-generated if not provided)
 
-**Example:**
+**Examples:**
+
+**Simple signing (development/testing):**
 ```json
 {
-  "apkPath": "/path/to/app.apk",
-  "keystorePath": "/path/to/keystore.jks",
-  "keystorePassword": "keystore123",
-  "keyAlias": "release",
-  "keyPassword": "key123"
+  "apkPath": "./app.apk"
 }
 ```
+
+**Production signing with custom keystore:**
+```json
+{
+  "apkPath": "./release.apk",
+  "keystorePath": "~/keys/release.keystore",
+  "keystorePassword": "mysecret",
+  "keyAlias": "release-key",
+  "keyPassword": "mysecret"
+}
+```
+
+**Chat usage:**
+- "Can you sign my app.apk file?" (uses debug keystore defaults)
+- "Sign my release.apk with my production keystore" (asks for keystore details)
 
 #### 2. Verify APK Signature (`verify_apk_signature`)
 Verify the signature of an APK file.

@@ -23,36 +23,40 @@ export class ApkSignerTools {
       tools: [
         {
           name: 'sign_apk',
-          description: 'Sign an APK file using Uber APK Signer',
+          description: 'Sign an APK file using Uber APK Signer. Only apkPath is required - other parameters can use defaults or be configured.',
           inputSchema: {
             type: 'object',
             properties: {
               apkPath: {
                 type: 'string',
-                description: 'Path to the APK file to sign',
+                description: 'Path to the APK file to sign (required)',
               },
               keystorePath: {
                 type: 'string',
-                description: 'Path to the keystore file',
+                description: 'Path to the keystore file (defaults to ~/.android/debug.keystore)',
+                default: '~/.android/debug.keystore',
               },
               keystorePassword: {
                 type: 'string',
-                description: 'Password for the keystore',
+                description: 'Password for the keystore (defaults to "android")',
+                default: 'android',
               },
               keyAlias: {
                 type: 'string',
-                description: 'Alias of the key to use for signing',
+                description: 'Alias of the key to use for signing (defaults to "androiddebugkey")',
+                default: 'androiddebugkey',
               },
               keyPassword: {
                 type: 'string',
-                description: 'Password for the key',
+                description: 'Password for the key (defaults to "android")',
+                default: 'android',
               },
               outputPath: {
                 type: 'string',
-                description: 'Output path for the signed APK (optional)',
+                description: 'Output path for the signed APK (optional, auto-generated if not provided)',
               },
             },
-            required: ['apkPath', 'keystorePath', 'keystorePassword', 'keyAlias', 'keyPassword'],
+            required: ['apkPath'],
           },
         },
         {
