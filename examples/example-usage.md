@@ -252,4 +252,98 @@ Certificate valid until: 2030-01-15
 5. **Signature Verification**: Ensuring APKs are properly signed
 6. **Keystore Management**: Creating and organizing signing keys
 
-This MCP server makes APK signing as simple as asking your chat LLM to "sign my app" - no need to remember complex command-line parameters! 
+This MCP server makes APK signing as simple as asking your chat LLM to "sign my app" - no need to remember complex command-line parameters!
+
+---
+
+## 🔌 **Integration with MCP Clients**
+
+### **Configuration Examples**
+
+The server works with any MCP-compatible client. Here are configuration examples for popular clients:
+
+#### **Claude Desktop**
+```json
+{
+  "mcpServers": {
+    "uber-apk-signer": {
+      "command": "node",
+      "args": ["/path/to/uber-apk-signer-mcp/dist/index.js"],
+      "cwd": "/path/to/uber-apk-signer-mcp"
+    }
+  }
+}
+```
+
+#### **Ollama**
+```yaml
+mcp_servers:
+  uber-apk-signer:
+    command: node
+    args: ["/path/to/uber-apk-signer-mcp/dist/index.js"]
+    cwd: "/path/to/uber-apk-signer-mcp"
+```
+
+#### **Generic MCP Client**
+Most MCP clients use this configuration structure:
+```json
+{
+  "mcpServers": {
+    "uber-apk-signer": {
+      "command": "node",
+      "args": ["/path/to/uber-apk-signer-mcp/dist/index.js"],
+      "cwd": "/path/to/uber-apk-signer-mcp"
+    }
+  }
+}
+```
+
+### **Custom MCP Client Implementation**
+
+If you're building a custom MCP client, here's how to connect:
+
+```typescript
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+
+const client = new Client({
+  name: 'my-client',
+  version: '1.0.0',
+});
+
+const transport = new StdioClientTransport({
+  command: 'node',
+  args: ['/path/to/uber-apk-signer-mcp/dist/index.js'],
+  cwd: '/path/to/uber-apk-signer-mcp',
+});
+
+await client.connect(transport);
+
+// List available tools
+const tools = await client.listTools();
+console.log('Available tools:', tools.tools);
+
+// Call a tool
+const result = await client.callTool({
+  name: 'sign_apk',
+  arguments: {
+    apkPath: '/path/to/app.apk'
+  },
+});
+
+console.log('Result:', result);
+```
+
+### **Environment Setup**
+
+Make sure to set the `UBER_APK_SIGNER_PATH` environment variable:
+
+```bash
+# Set the path to your Uber APK Signer tool
+export UBER_APK_SIGNER_PATH="/usr/local/bin/uber-apk-signer"
+
+# Or add to your shell profile
+echo 'export UBER_APK_SIGNER_PATH="/usr/local/bin/uber-apk-signer"' >> ~/.bashrc
+```
+
+**Note**: Replace `/path/to/uber-apk-signer-mcp` with the actual path to your installation directory. 

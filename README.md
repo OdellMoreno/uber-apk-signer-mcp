@@ -167,10 +167,11 @@ Create a new keystore for APK signing.
 
 ## Integration with Chat LLMs
 
-### Claude Desktop
+### MCP Client Configuration
 
-Add this to your `claude_desktop_config.json`:
+The server supports stdio transport and can be integrated with any MCP-compatible client. Here are configuration examples for popular clients:
 
+#### Claude Desktop
 ```json
 {
   "mcpServers": {
@@ -183,9 +184,50 @@ Add this to your `claude_desktop_config.json`:
 }
 ```
 
-### Other MCP Clients
+#### Ollama
+```yaml
+# In your Ollama configuration
+mcp_servers:
+  uber-apk-signer:
+    command: node
+    args: ["/path/to/uber-apk-signer-mcp/dist/index.js"]
+    cwd: "/path/to/uber-apk-signer-mcp"
+```
 
-For other MCP clients, configure the server according to their documentation. The server supports both stdio and TCP transport modes.
+#### Custom MCP Client
+```typescript
+import { Client } from '@modelcontextprotocol/sdk/client/index.js';
+import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+
+const client = new Client({
+  name: 'my-client',
+  version: '1.0.0',
+});
+
+const transport = new StdioClientTransport({
+  command: 'node',
+  args: ['/path/to/uber-apk-signer-mcp/dist/index.js'],
+  cwd: '/path/to/uber-apk-signer-mcp',
+});
+
+await client.connect(transport);
+```
+
+#### Generic Configuration
+Most MCP clients use a similar configuration structure:
+```json
+{
+  "mcpServers": {
+    "uber-apk-signer": {
+      "command": "node",
+      "args": ["/path/to/uber-apk-signer-mcp/dist/index.js"],
+      "cwd": "/path/to/uber-apk-signer-mcp"
+    }
+  }
+}
+```
+
+**Note**: Replace `/path/to/uber-apk-signer-mcp` with the actual path to your installation directory.
 
 ## Development
 
